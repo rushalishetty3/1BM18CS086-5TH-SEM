@@ -54,6 +54,16 @@ Node insert_rear(Node head){
     return head;
 }
 
+Node delete_front(Node head){
+    if(head == NULL || head->next == NULL){
+        return NULL;
+    }
+    Node p = head->next;
+    p->next = (Node) ((uintptr_t)(p->next) ^ (uintptr_t)(NULL));
+    free(head);
+    return p;
+}
+
 void display(Node head){
     cout<<"\nElements: ";
     if(head->next == NULL){
@@ -78,7 +88,7 @@ int main(){
     Node head = NULL;
     int choice;
     do{
-        cout<<"\n1)Insert Beginning\n2)Insert End\n3)Exit\nEnter your choice:";
+        cout<<"\n1)Insert Beginning\n2)Insert End\n3)Delete Beginning\n4)Exit\nEnter your choice:";
         cin>>choice;
         switch(choice){
             case 1: head = insert_front(head);
@@ -87,7 +97,10 @@ int main(){
             case 2: head = insert_rear(head);
                     display(head);
                     break;
-            case 3: exit(0);
+            case 3: head = delete_front(head);
+                    display(head);
+                    break;
+            case 4: exit(0);
         }
     }while(1);
 }
