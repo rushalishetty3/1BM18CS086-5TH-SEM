@@ -35,49 +35,93 @@ def checkWin(player):
         if board[x[0]]==board[x[1]] and board[x[1]]==board[x[2]] and board[x[0]]!=0:
             print(player+" Won")
             return 0
-    return 1
+    for i in board:
+        if i==0:
+            return 1
+    
+    print("Draw Match")
+
+def algoWin():
+    n=-1
+
+    for x in winningPosition:
+        if (board[x[0]]==2 and board[x[1]]==2) and checkIfAvailable(x[2])==1:
+            n = x[2]
+            break
+        elif (board[x[1]]==2 and board[x[2]]==2) and checkIfAvailable(x[0])==1:
+            n = x[0]
+            break
+        elif (board[x[0]]==2 and board[x[2]]==2) and checkIfAvailable(x[1])==1:
+            n = x[1]
+            break
+
+    return n
+
+def stopPlayer():
+    n = -1
+
+    for x in winningPosition:
+        if (board[x[0]]==1 and board[x[1]]==1) and checkIfAvailable(x[2])==1:
+            n = x[2]
+            break
+        elif (board[x[1]]==1 and board[x[2]]==1) and checkIfAvailable(x[0])==1:
+            n = x[0]
+            break
+        elif (board[x[0]]==1 and board[x[2]]==1) and checkIfAvailable(x[1])==1:
+            n = x[1]
+            break
+    return n
+
+def algoTryWin():
+    n = -1
+
+    for x in winningPosition:
+        if board[x[0]]==1:
+            if checkIfAvailable(x[2]==1):
+                n = x[2]
+                break
+            elif checkIfAvailable(x[1]==1):
+                n = x[1]
+                break
+        elif board[x[1]]==1:
+            if checkIfAvailable(x[0]==1):
+                n = x[0]
+                break
+            elif checkIfAvailable(x[2]==1):
+                n = x[2]
+                break
+        elif board[x[2]]==1:
+            if checkIfAvailable(x[0]==1):
+                n = x[0]
+                break
+            elif checkIfAvailable(x[1]==1):
+                n = x[1]
+                break
+    
+    return n
+
+def randomPos():
+    while(1):
+        n = random.randint(0,9)
+        if checkIfAvailable(n)==1:
+            return n
+
 
 def algoPlay():
-    # n = -1
-    # for x in winningPosition:
-    #     if (board[x[0]==2] and board[x[1]==2]) and checkIfAvailable(x[2])==1:
-    #         n = x[2]
-    #         break
-    #     elif (board[x[1]==2] and board[x[2]==2]) and checkIfAvailable(x[0])==1:
-    #         n = x[0]
-    #         break
-    #     elif (board[x[0]==2] and board[x[2]==2]) and checkIfAvailable(x[1])==1:
-    #         n = x[1]
-    #         break
-    # if n==-1:
-    #     for x in winningPosition:
-    #         if (board[x[0]==2]) and checkIfAvailable(x[2])==1 and checkIfAvailable(x[1])==1:
-    #             n = x[1]
-    #             break
-    #         elif (board[x[1]==2]) and checkIfAvailable(x[0])==1 and checkIfAvailable(x[2])==1:
-    #             n = x[2] #or x[0]
-    #             break
-    #         elif (board[x[2]==2]) and checkIfAvailable(x[0])==1 and checkIfAvailable(x[1])==1:
-    #             n = x[1]
-    #             break
-    # if n==-1:
-    #     while(1):
-    #         n = random.randint(0,9)
-    #         if checkIfAvailable(n)==1:
-    #             break
-    # print("Algorithm inserted at ",end="")
-    # print(n)
-    # board[n] = 2
-    # return
+    n = algoWin()
 
+    if n==-1:
+        n = stopPlayer()
+    
+    if n==-1:
+        n = algoTryWin()
 
-    while(1):
-        n = random.randint(0,8)
-        if checkIfAvailable(n)==1:
-            print("Algorithm inserted at ",end="")
-            print(n)
-            board[n] = 2
-            return
+    if n==-1:
+        n = randomPos()
+
+    print("Algorithm inserted at ",end="")
+    print(n)
+    board[n] = 2
 
 def play():
     boardDisplay()
