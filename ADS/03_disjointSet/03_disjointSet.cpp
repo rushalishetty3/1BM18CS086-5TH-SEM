@@ -2,13 +2,15 @@
 using namespace std;
 class UnionFind{
 	vector<int> parent;
+    vector<int> rank;
 	public:
 	int count;
 	UnionFind(int n){
 		for(int i=0; i<n; i++){
 			parent.push_back(i);
+            rank.push_back(0);
 		}
-		count = 0;
+		// count = 0;
 	}
 	int find(int x){
 		if(parent[x] == x)
@@ -19,7 +21,15 @@ class UnionFind{
 		int rootx = find(x);
 		int rooty = find(y);
 		if(rootx != rooty){
-			parent[rootx] = rooty;
+            if(rank[x]>rank[y]){
+                parent[rooty] = rootx;
+                rank[rootx]++;
+            }
+            else{
+                parent[rootx] = rooty;
+                rank[rooty]++;
+            }
+			// parent[rootx] = rooty;
 			count--;
 		}
 		
@@ -74,6 +84,7 @@ int numIslands(vector<vector<int>> mat)
 				
 		}
 	}
+    // return uf->findNumber();
 	return uf->count;
 }
 
