@@ -2,6 +2,7 @@ import math
 
 maze = []
 path = []
+closedPath = []
 neigbhours = [[1,1],[0,1],[1,0],[1,-1],[0,-1],[-1,1],[-1,0],[-1,-1]]
 
 def euclidDist(x,n,m):
@@ -31,15 +32,24 @@ def findPath(n,m):
             a.append(current[1]+x[1])
             if a[0]>-1 and a[0]<n and a[1]>-1 and a[1]<m:
                 if(maze[a[0]][a[1]]):
-                    if a not in path: 
+                    if a not in path and a not in closedPath: 
                         nextPath.append(a)
 
         if(nextPath):   
             current = findShortestPath(nextPath,n,m)
             path.append(current)
         else:
-            print("NO PATH")
-            exit(0)
+            if path:
+                closedPath.append(current)
+                path.pop()
+                if path: 
+                    current = path[len(path)-1]
+                else:
+                    print("NO PATH")
+                    exit(0)
+            else:
+                print("NO PATH")
+                exit(0)
 
 def start():
     n = int(input("\nEnter number of rows: "))
@@ -49,8 +59,9 @@ def start():
 
     for i in range(n):
         a = []
-        for j in range(m):
-            a.append(int(input()))
+        # for j in range(m):
+        #     a.append(int(input()))
+        a = list(map(int, input().split(" ")))
         maze.append(a)
 
     print("\n\n***MAZE***")
