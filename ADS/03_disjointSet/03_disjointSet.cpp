@@ -51,41 +51,42 @@ int numIslands(vector<vector<int>> mat)
 				count++;
 		}
 	}
-	UnionFind *uf = new UnionFind(m*n);
-	uf->setCount(count);
+	UnionFind uf(m*n);
+	// UnionFind *uf = new UnionFind(m*n);
+	uf.setCount(count);
 	for(int i=0; i<m; i++){
 		for(int j=0; j<n; j++){
 			if(mat[i][j]){
 				if(i>0 && mat[i-1][j]){
-					uf->connect(n*i+j, n*(i-1)+j);
+					uf.connect(n*i+j, n*(i-1)+j);
 				}
 				if(i<m-1 && mat[i+1][j]){
-					uf->connect(n*i+j, n*(i+1)+j);
+					uf.connect(n*i+j, n*(i+1)+j);
 				}
 				if(j>0 && mat[i][j-1]){
-					uf->connect(n*i+j, n*i+j-1);
+					uf.connect(n*i+j, n*i+j-1);
 				}
 				if(j<n-1 && mat[i][j+1]){
-					uf->connect(n*i+j, n*i+j+1);
+					uf.connect(n*i+j, n*i+j+1);
 				}
 				if(i>0 && j>0 && mat[i-1][j-1]){
-					uf->connect(n*i+j, n*(i-1)+j-1);
+					uf.connect(n*i+j, n*(i-1)+j-1);
 				}
 				if(i<m-1 && j<n-1 && mat[i+1][j+1]){
-					uf->connect(n*i+j, n*(i+1)+j+1);
+					uf.connect(n*i+j, n*(i+1)+j+1);
 				}
 				if(i>0 && j<n-1 && mat[i-1][j+1]){
-					uf->connect(n*i+j, n*(i-1)+j+1);
+					uf.connect(n*i+j, n*(i-1)+j+1);
 				}
 				if(i<m-1 && j>0 && mat[i+1][j-1]){
-					uf->connect(n*i+j, n*(i+1)+j-1);
+					uf.connect(n*i+j, n*(i+1)+j-1);
 				}
 			}
 				
 		}
 	}
     // return uf->findNumber();
-	return uf->count;
+	return uf.count;
 }
 
 int main(){

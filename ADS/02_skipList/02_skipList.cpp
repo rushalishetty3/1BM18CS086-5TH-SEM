@@ -17,7 +17,7 @@ Node::Node(int key, int level){
 class SkipList 
 { 
     int MAXLVL; 
-    float P; 
+    // float P; 
     int level; 
     Node *header;
 
@@ -34,7 +34,7 @@ class SkipList
 SkipList::SkipList(int MAXLVL) 
 { 
     this->MAXLVL = MAXLVL; 
-    this->P = P; 
+    // this->P = P; 
     level = 0; 
 
     header = new Node(-1, MAXLVL); 
