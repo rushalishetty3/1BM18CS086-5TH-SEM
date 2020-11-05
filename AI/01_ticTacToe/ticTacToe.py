@@ -102,7 +102,7 @@ def algoTryWin():
 
 def randomPos():
     while(1):
-        n = random.randint(0,9)
+        n = random.randint(0,8)
         if checkIfAvailable(n)==1:
             return n
 
