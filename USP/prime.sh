@@ -1,20 +1,20 @@
-read -p "Enter a number : " n
+echo -n "Enter number: "
+read n
 
-i=2
 flag=0
 
-while test $i -le `expr $n / 2`
+for i in $(seq 2 $((n / 2)))
 do
-if test `expr $n % $i` -eq 0
-then
-flag=1
-fi
+	if [ $((n % i)) -eq 0 ]
+	then
+		flag=1
+		break
+	fi
+done
 
-i=`expr $i + 1`
-done 
-if test $flag -eq 1
+if [ $flag -eq 0 ]
 then
-echo "The number is Not Prime"
+	echo "Prime"
 else
-echo "The number is Prime"
+	echo "Not Prime"
 fi
