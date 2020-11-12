@@ -41,57 +41,57 @@ def checkWin(player):
     
     print("Draw Match")
 
-def algoWin():
+def algoWin(player):
     n=-1
 
     for x in winningPosition:
-        if (board[x[0]]=="O" and board[x[1]]=="O") and checkIfAvailable(x[2])==1:
+        if (board[x[0]]==player and board[x[1]]==player) and checkIfAvailable(x[2])==1:
             n = x[2]
             break
-        elif (board[x[1]]=="O" and board[x[2]]=="O") and checkIfAvailable(x[0])==1:
+        elif (board[x[1]]==player and board[x[2]]==player) and checkIfAvailable(x[0])==1:
             n = x[0]
             break
-        elif (board[x[0]]=="O" and board[x[2]]=="O") and checkIfAvailable(x[1])==1:
+        elif (board[x[0]]==player and board[x[2]]==player) and checkIfAvailable(x[1])==1:
             n = x[1]
             break
 
     return n
 
-def stopPlayer():
+def stopPlayer(player):
     n = -1
 
     for x in winningPosition:
-        if (board[x[0]]=="X" and board[x[1]]=="X") and checkIfAvailable(x[2])==1:
+        if (board[x[0]]==player and board[x[1]]==player) and checkIfAvailable(x[2])==1:
             n = x[2]
             break
-        elif (board[x[1]]=="X" and board[x[2]]=="X") and checkIfAvailable(x[0])==1:
+        elif (board[x[1]]==player and board[x[2]]==player) and checkIfAvailable(x[0])==1:
             n = x[0]
             break
-        elif (board[x[0]]=="X" and board[x[2]]=="X") and checkIfAvailable(x[1])==1:
+        elif (board[x[0]]==player and board[x[2]]==player) and checkIfAvailable(x[1])==1:
             n = x[1]
             break
     
     return n
 
-def algoTryWin():
+def algoTryWin(player):
     n = -1
 
     for x in winningPosition:
-        if board[x[0]]=="X":
+        if board[x[0]]==player and checkIfAvailable(x[2]==1) and checkIfAvailable(x[1]==1):
             if checkIfAvailable(x[2]==1):
                 n = x[2]
                 break
             elif checkIfAvailable(x[1]==1):
                 n = x[1]
                 break
-        elif board[x[1]]=="X":
+        elif board[x[1]]==player and checkIfAvailable(x[0]==1) and checkIfAvailable(x[2]==1):
             if checkIfAvailable(x[0]==1):
                 n = x[0]
                 break
             elif checkIfAvailable(x[2]==1):
                 n = x[2]
                 break
-        elif board[x[2]]=="X":
+        elif board[x[2]]==player and checkIfAvailable(x[0]==1) and checkIfAvailable(x[1]==1):
             if checkIfAvailable(x[0]==1):
                 n = x[0]
                 break
@@ -107,39 +107,37 @@ def randomPos():
             return n
 
 
-def algoPlay():
-    n = algoWin()
+def algoPlay(x,y):
+    n = algoWin(x)
 
     if n==-1:
-        n = stopPlayer()
+        n = stopPlayer(y)
     
     if n==-1:
-        n = algoTryWin()
+        n = algoTryWin(x)
 
     if n==-1:
         n = randomPos()
 
     print("Algorithm inserted at ",end="")
     print(n)
-    board[n] = "O"
+    board[n] = x
 
 def play():
     boardDisplay()
     flag = 1
     while(flag):
-        print("\n---Player Turn--\n")
-        playerPos = int(input("\nEnter position(0-9): "))
-        if(checkIfAvailable(playerPos) == 1):
-            board[playerPos] = "X"
+        print("\n Algorithm 1 Playing\n")
+        algoPlay("X","O")
+        boardDisplay()
+        if checkWin("Algorithm 1") == 1:
+            print("\n Algorithm 2 Playing\n")
+            algoPlay("O","X")
             boardDisplay()
-            flag = checkWin("Player")
-            if flag==1:
-                print("\n---Algorithm Turn--\n")
-                algoPlay()
-                boardDisplay()
-                flag = checkWin("Algorithm")
+            if checkWin("Algorithm 2") == 0:
+                flag = 0
         else:
-            print("Can't insert in this position")
+            flag = 0
 
 if __name__ == "__main__":
     play()
