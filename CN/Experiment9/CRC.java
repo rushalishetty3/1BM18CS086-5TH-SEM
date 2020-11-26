@@ -13,6 +13,8 @@ public class CRC{
         System.out.print("Enter poly: ");
         code=in.nextLine();
 
+        System.out.println("Generating polynomial: 10001000000100001");
+
         n=code.length();
         copy=code;
         code+=zero;
@@ -21,27 +23,44 @@ public class CRC{
 
         code=ob.divide(code);
 
-        System.out.println("Remainder: "+code.substring(n));
+        System.out.println("CheckSum: "+code.substring(n));
 
         copy=copy.substring(0,n)+code.substring(n);
 
-        System.out.println("transmitted frame: "+copy);
+        System.out.println("Final Codeword: "+copy);
 
-        System.out.print("\nEnter recived data: ");
-        rec=in.nextLine();
+        // System.out.print("\nEnter recived data: ");
+        // rec=in.nextLine();
 
-        if(zero.equals(ob.divide(rec).substring(n)))
-            System.out.println("Correct bits recieved");
-        else
-            System.out.println("Recieved frame contains one or more errors");
+        // if(zero.equals(ob.divide(rec).substring(n)))
+        //     System.out.println("Correct bits recieved");
+        // else
+        //     System.out.println("Recieved frame contains one or more errors");
+
+        System.out.print("Test Error detection 0(yes) 1(no)? : ");
+        int choice = in.nextInt();
+
+        if(choice == 0){
+            System.out.print("Enter position on error: ");
+            int errorPos = in.nextInt();
+
+            if(copy.charAt(errorPos) == '1')
+                copy = copy.substring(0,errorPos) + "0" + copy.substring(errorPos+1);
+            else 
+                copy = copy.substring(0,errorPos) + "1" + copy.substring(errorPos+1);
+
+            System.out.println("Errorneous data: "+copy);
+
+            System.out.println("Error detected");
+        }
+        else 
+            System.out.println("No Error detection");
     }  
 
     public String divide(String s){
         int i,j;
         char x;
         String div="10001000000100001";
-
-        System.out.println("CRC = "+div);
 
         for(i=0;i<n;i++){
             x=s.charAt(i);
