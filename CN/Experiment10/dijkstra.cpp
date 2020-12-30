@@ -47,7 +47,7 @@ void dijkstra(int graph[V][V], int src)
 
     for (int i = 0; i < V; i++) 
     { 
-        parent[0] = -1; 
+        parent[i] = -1; 
         dist[i] = 9999; 
         sptSet[i] = false; 
     } 
